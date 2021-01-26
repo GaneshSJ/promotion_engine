@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/.vs/PromotionEngine
+/src/obj/Debug/netcoreapp3.1
+/src/obj
