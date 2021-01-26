@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace PromotionEngine.Models
 {
@@ -16,5 +17,9 @@ namespace PromotionEngine.Models
             Price = price;
             IsActive = true;
         }
+
+        public bool IsApplicable(Order order) => UnitQuantities.All(promoUnitQuantity =>
+            order.UnitQuantities.Any(orderUnitQuantity => promoUnitQuantity.Unit.Equals(orderUnitQuantity.Unit) &&
+                                                          orderUnitQuantity.Quantity >= promoUnitQuantity.Quantity));
     }
 }

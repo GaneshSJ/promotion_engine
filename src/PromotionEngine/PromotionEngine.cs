@@ -19,8 +19,10 @@ namespace PromotionEngine
             
             var promoUnitA = new List<UnitQuantity> { new UnitQuantity(UnitA, 3) };
             _promotions.Add(new Promotion("Promotion 1", promoUnitA, 130));
+
             var promoUnitB = new List<UnitQuantity> { new UnitQuantity(UnitB, 2) };
             _promotions.Add(new Promotion("Promotion 2", promoUnitB, 45));
+
             var promoUnitsCAndD = new List<UnitQuantity> { new UnitQuantity(UnitC), new UnitQuantity(UnitD) };
             _promotions.Add(new Promotion("Promotion 3", promoUnitsCAndD, 30));
         }
@@ -30,12 +32,12 @@ namespace PromotionEngine
             var value = 0;
             _promotions.ForEach(promo =>
             {
-                while (promo.UnitQuantities.All(promoUnitQuantity => order.UnitQuantities.Any(orderUnitQuantity => promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name) && orderUnitQuantity.Quantity >= promoUnitQuantity.Quantity)))
+                while (promo.IsApplicable(order))
                 {
                     promo.UnitQuantities.ForEach(promoUnitQuantity =>
-                        order.UnitQuantities.First(orderUnitQuantity =>
-                                promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name)).Quantity -=
-                            promoUnitQuantity.Quantity);
+                        order.UnitQuantities
+                            .First(orderUnitQuantity => promoUnitQuantity.Unit.Equals(orderUnitQuantity.Unit))
+                            .Quantity -= promoUnitQuantity.Quantity);
                     value += promo.Price;
                 }
             });

@@ -1,6 +1,8 @@
-﻿namespace PromotionEngine.Models
+﻿using System;
+
+namespace PromotionEngine.Models
 {
-    public class Unit
+    public class Unit: IEquatable<Unit>
     {
         public char Name { get; }
         public int Price { get; }
@@ -10,5 +12,7 @@
             Name = name;
             Price = price;
         }
+
+        public bool Equals(Unit other) => other != null && Name.Equals(other.Name);
     }
 }
