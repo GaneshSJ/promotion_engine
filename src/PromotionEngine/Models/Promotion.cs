@@ -5,11 +5,11 @@ namespace PromotionEngine.Models
     internal class Promotion
     {
         public string Name { get; }
-        public IList<UnitQuantity> UnitQuantities { get; }
+        public List<UnitQuantity> UnitQuantities { get; }
         public int Price { get; }
         public bool IsActive;
 
-        public Promotion(string name, IList<UnitQuantity> unitQuantities, int price)
+        public Promotion(string name, List<UnitQuantity> unitQuantities, int price)
         {
             Name = name;
             UnitQuantities = unitQuantities;

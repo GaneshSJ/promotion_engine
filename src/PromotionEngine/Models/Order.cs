@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using PromotionEngine.Models;
 
-namespace PromotionEngine
+namespace PromotionEngine.Models
 {
     public class Order
     {
-        public IList<UnitQuantity> UnitQuantities { get; }
+        public List<UnitQuantity> UnitQuantities { get; }
 
         public Order() => UnitQuantities = new List<UnitQuantity>();
 

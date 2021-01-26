@@ -6,7 +6,7 @@ namespace PromotionEngine
 {
     public class PromotionEngine
     {
-        private readonly IList<Promotion> _promotions;
+        private readonly List<Promotion> _promotions;
 
         public readonly Unit UnitA = new Unit('A', 50);
         public readonly Unit UnitB = new Unit('B', 30);
@@ -27,7 +27,21 @@ namespace PromotionEngine
 
         public int CalculateValue(Order order)
         {
-            return 0;
+            var value = 0;
+            _promotions.ForEach(promo =>
+            {
+                if (!promo.UnitQuantities.All(promoUnitQuantity => order.UnitQuantities.Any(orderUnitQuantity =>
+                    promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name) &&
+                    orderUnitQuantity.Quantity <= promoUnitQuantity.Quantity)))
+                    return;
+                promo.UnitQuantities.ForEach(promoUnitQuantity =>
+                    order.UnitQuantities.First(orderUnitQuantity =>
+                            promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name)).Quantity -=
+                        promoUnitQuantity.Quantity);
+                value += promo.Price;
+            });
+            order.UnitQuantities.ForEach(unitQuantity => value += unitQuantity.Unit.Price * unitQuantity.Quantity);
+            return value;
         }
     }
 }
