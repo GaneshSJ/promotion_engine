@@ -5,3 +5,8 @@
 /src/.vs/PromotionEngine
 /src/obj/Debug/netcoreapp3.1
 /src/obj
+/src/PromotionEngine.Test/obj
+/src/PromotionEngine/obj
+/src/PromotionEngine/bin/Debug/netcoreapp3.1
+/src/PromotionEngine.Test/bin/Debug/netcoreapp3.1
+/src/PromotionEngine.sln.DotSettings.user
