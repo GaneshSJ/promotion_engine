@@ -30,15 +30,14 @@ namespace PromotionEngine
             var value = 0;
             _promotions.ForEach(promo =>
             {
-                if (!promo.UnitQuantities.All(promoUnitQuantity => order.UnitQuantities.Any(orderUnitQuantity =>
-                    promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name) &&
-                    orderUnitQuantity.Quantity <= promoUnitQuantity.Quantity)))
-                    return;
-                promo.UnitQuantities.ForEach(promoUnitQuantity =>
-                    order.UnitQuantities.First(orderUnitQuantity =>
-                            promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name)).Quantity -=
-                        promoUnitQuantity.Quantity);
-                value += promo.Price;
+                while (promo.UnitQuantities.All(promoUnitQuantity => order.UnitQuantities.Any(orderUnitQuantity => promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name) && orderUnitQuantity.Quantity >= promoUnitQuantity.Quantity)))
+                {
+                    promo.UnitQuantities.ForEach(promoUnitQuantity =>
+                        order.UnitQuantities.First(orderUnitQuantity =>
+                                promoUnitQuantity.Unit.Name.Equals(orderUnitQuantity.Unit.Name)).Quantity -=
+                            promoUnitQuantity.Quantity);
+                    value += promo.Price;
+                }
             });
             order.UnitQuantities.ForEach(unitQuantity => value += unitQuantity.Unit.Price * unitQuantity.Quantity);
             return value;
